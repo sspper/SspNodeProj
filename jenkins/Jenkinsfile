@@ -77,6 +77,7 @@ stage('build') {
 if('develop' == branchTag()) {
  stage('deploy') {
     // docker.image(settings.kubectlImage).inside {
+    sh "sh jenkins/kube_config.sh"
        deploymentUpdateSspWebNode("k8s.sspcloudpro.co.in", "develop", "ssp25/ssp-nodejs-proj:${branchAndBuildTag()}")
   //   }
  }
