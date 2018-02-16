@@ -37,7 +37,7 @@ def branchTag() {
 }
 
 def deploymentUpdateSspWebNode(context, namespace, newVersion) {
-    sh "/usr/local/bin/kubectl set image deployment stupid-node-deployment stupid-node=${newVersion} --context=${context} --namespace=${namespace}"
+    sh "/usr/local/bin/kubectl set image deployment ssp-nodejs ssp-nodejs=${newVersion} --context=${context} --namespace=${namespace}"
 
 
   //  sh "delivery/pearl-squad/artisan-mobile-bff/env/reload-secret.sh ${namespace} ${context}"
@@ -77,7 +77,7 @@ stage('build') {
 if('develop' == branchTag()) {
  stage('deploy') {
     // docker.image(settings.kubectlImage).inside {
-       deploymentUpdateSspWebNode("minikube", "ssp-dev", "ssp25/ssp-web-node:${branchAndBuildTag()}")
+       deploymentUpdateSspWebNode("k8s.sspcloudpro.co.in", "develop", "ssp25/ssp-nodejs-proj:${branchAndBuildTag()}")
   //   }
  }
 }
@@ -85,7 +85,7 @@ if('develop' == branchTag()) {
 
 // Our Main Job starts from here....!!!
 
-node ('ssp-mac') {
+node ('ssp-aws') {
      deleteDir()
 
     try {
