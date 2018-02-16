@@ -63,12 +63,12 @@ def settings = settings()
 stage('build') {
  //def image = docker.build("ssp25/ssp-web-node")
  sh " cd $WORKSPACE"
- sh "/usr/local/bin/docker build -t ssp25/ssp-web-node:${branchAndBuildTag()} ."
+ sh "/usr/bin/docker build -t ssp25/ssp-web-node:${branchAndBuildTag()} ."
  //sh "/usr/local/bin/docker build -t ssp25/ssp-web-node:${branchTag()} ."
 }
 stage('build') {
   sh " cd $WORKSPACE"
-  sh "/usr/local/bin/docker push ssp25/ssp-web-node:${branchAndBuildTag()}"
+  sh "/usr/bin/docker push ssp25/ssp-web-node:${branchAndBuildTag()}"
  //sh "/usr/local/bin/docker push ssp25/ssp-web-node:${branchTag()}"
  //image.push(branchTag())
  //image.push(branchAndBuildTag())
@@ -97,7 +97,7 @@ node ('ssp-aws') {
 
         notify(" Job Started ")
         withCredentials([usernamePassword(credentialsId: 'ssp-docker-hub', passwordVariable: 'dockerhubPass', usernameVariable: 'dockerhubUser')]) {
-            sh "/usr/local/bin/docker login -u ${dockerhubUser} -p ${dockerhubPass}"
+            sh "/usr/bin/docker login -u ${dockerhubUser} -p ${dockerhubPass}"
         }
 // Calling this method for build and push and deploy the docker image.
   doBuild()
