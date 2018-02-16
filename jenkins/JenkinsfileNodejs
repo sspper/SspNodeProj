@@ -61,15 +61,15 @@ def settings = settings()
 
 
 stage('build') {
- //def image = docker.build("ssp25/ssp-web-node")
+ //def image = docker.build("ssp25/ssp-nodejs-proj")
  sh " cd $WORKSPACE"
- sh "/usr/bin/docker build -t ssp25/ssp-web-node:${branchAndBuildTag()} ."
- //sh "/usr/local/bin/docker build -t ssp25/ssp-web-node:${branchTag()} ."
+ sh "/usr/bin/docker build -t ssp25/ssp-nodejs-proj:${branchAndBuildTag()} ."
+ //sh "/usr/local/bin/docker build -t ssp25/ssp-nodejs-proj:${branchTag()} ."
 }
-stage('build') {
+stage('Push') {
   sh " cd $WORKSPACE"
-  sh "/usr/bin/docker push ssp25/ssp-web-node:${branchAndBuildTag()}"
- //sh "/usr/local/bin/docker push ssp25/ssp-web-node:${branchTag()}"
+  sh "/usr/bin/docker push ssp25/ssp-nodejs-proj:${branchAndBuildTag()}"
+ //sh "/usr/local/bin/docker push ssp25/ssp-nodejs-proj:${branchTag()}"
  //image.push(branchTag())
  //image.push(branchAndBuildTag())
 }
@@ -96,7 +96,7 @@ node ('ssp-aws') {
         checkout scm
         }
 
-        notify(" Job Started ")
+  //      notify(" Job Started ")
       //  loginToDocker()
         withCredentials([usernamePassword(credentialsId: 'ssp-docker-hub', passwordVariable: 'dockerhubPass', usernameVariable: 'dockerhubUser')]) {
             sh "/usr/bin/docker login -u ${dockerhubUser} -p ${dockerhubPass}"
@@ -104,11 +104,11 @@ node ('ssp-aws') {
 // Calling this method for build and push and deploy the docker image.
   doBuild()
 
-       notify("Job is SUCCESS")
+  //     notify("Job is SUCCESS")
     } catch (e) {
         currentBuild.result = "FAILED"
         echo "${e.getClass().getName()} - ${e.getMessage()}"
-        notifyFailure("${e.getClass().getName()} - ${e.getMessage()}")
+    //    notifyFailure("${e.getClass().getName()} - ${e.getMessage()}")
         throw e
     }
 }
