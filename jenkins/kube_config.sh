@@ -7,7 +7,7 @@ CLUSTER_NAME="k8s.sspcloudpro.co.in"
 kubectl config set preferences.colors true
 kubectl config set-cluster ${CLUSTER_NAME} --server=${API_SERVER} --insecure-skip-tls-verify=true
 kubectl config set-credentials ${CLUSTER_NAME} --token=${TOKEN}
-kubectl config set-context develop-paris --cluster=${CLUSTER_NAME} --user=${CLUSTER_NAME} --namespace=develop
+kubectl config set-context k8s.sspcloudpro.co.in  --cluster=${CLUSTER_NAME} --user=${CLUSTER_NAME} --namespace=develop
 # To test that configuration works
-kubectl get po --context="k8s.sspcloudpro.co.in" --namespace develop
+kubectl get pods --context="k8s.sspcloudpro.co.in" --namespace develop
 kubectl config get-contexts --namespace develop
